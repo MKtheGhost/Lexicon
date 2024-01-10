@@ -3,9 +3,36 @@
 
 using namespace std;
 
-void talon();
+#include "../header/cartes.h"
+#include "../header/joueur.h"
 
-void exposee();
+
+void talon(unsigned int idJoueur, JoueursActifs& joueurs, Talon& talon){
+
+    //ajouter la carte au sommet du talon à la main du joueur
+    ajouterCarte(joueurs.listeJoueurs[idJoueur].cartes, talon.cartes[0]);
+    joueurs.listeJoueurs[idJoueur].nbCartes++;
+    joueurs.listeJoueurs[idJoueur].points += talon.cartes[0].points;
+
+    //supprimer la carte prise du talon
+    SupprimerCarte(talon.nbCartes, talon.cartes, 0);
+    talon.nbCartes--;
+};
+
+void exposee(unsigned int idJoueur, JoueursActifs& joueurs, Talon& talon){
+
+    //ajouter la carte exposee dans la main du joueur
+    ajouterCarte(joueurs.listeJoueurs[idJoueur].cartes, talon.carteExposee);
+    joueurs.listeJoueurs[idJoueur].nbCartes++;
+    joueurs.listeJoueurs[idJoueur].points += talon.carteExposee.points;
+
+    //supprimer la carte exposee prise et la remplacer par une autre carte du talon
+    talon.carteExposee = talon.cartes[0];
+
+    //supprimer la carte prise du talon
+    SupprimerCarte(talon.nbCartes, talon.cartes, 0);
+    talon.nbCartes--;
+};
 
 void posee(){
     char mot;

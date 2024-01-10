@@ -1,6 +1,9 @@
 #include <iostream>
-#include "cartes.h"
 using namespace std;
+
+#include "../header/cartes.h"
+#include "../header/joueur.h"
+#include "../header/commande.h"
 
 void prendreCommande(char commande){
     

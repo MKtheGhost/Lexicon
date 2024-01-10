@@ -1,3 +1,6 @@
+#ifndef CARTES_H
+#define CARTES_H
+
 const unsigned int NB_CARTES = 51;
 const unsigned int NB_CARTES_PAR_PERSONNE = 10;
 
@@ -54,3 +57,5 @@ void SupprimerCarte(unsigned int nbCartes, Carte *cartes, unsigned int iCarte);
  * @param{in/out} joueurs : les joueurs actifs jouant dans cette partie
 */
 void DistributionCarte(Talon &talon, JoueursActifs &joueurs);
+
+#endif

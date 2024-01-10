@@ -1,9 +1,11 @@
+#ifndef JOUEUR_H
+#define JOUEUR_H
 
 const unsigned int NB_JOUEURS_MAX = 4;
 
 struct Joueur{
     int numero;
-    Carte cartes[NB_CARTES];
+    Carte *cartes;
     unsigned int nbCartes;
     int points;
     unsigned int statut;
@@ -29,4 +31,11 @@ void InitJoueur(unsigned int nbJoueur, Joueur (&joueurs)[NB_JOUEURS_MAX], Joueur
 */
 void supprimerJoueur (JoueursActifs& joueursActifs, Joueur joueurs[NB_JOUEURS_MAX]);
 
+/**
+ * @brief initialiser les joueurs actifs dans le tour en cours
+ * @param{in/out} joueursActifs : la struct de joueurs actifs à initialiser
+ * @param[in] nbJoueur : le nombre de joueur jouant dans le tour en cours
+*/
 void initJoueursActifs(JoueursActifs& joueursActifs, unsigned int nbJoueur);
+
+#endif

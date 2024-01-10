@@ -2,8 +2,8 @@
 #include <time.h>
 using namespace std;
 
-#include "../header/cartes.h"
 #include "../header/joueur.h"
+#include "../header/cartes.h"
 
 void InitCartes( JoueursActifs &joueurs,Carte (&cartes)[NB_CARTES], Talon &talon){
     MelangeCarte(cartes);
@@ -73,8 +73,12 @@ void SupprimerCarte(unsigned int nbCartes, Carte *cartes, unsigned int iCarte){
 
 void DistributionCarte(Talon &talon, JoueursActifs &joueurs){
    for ( unsigned int i = 0; i < joueurs.nbJoueur; i++){
+
+        joueurs.listeJoueurs[i].cartes = new Carte[NB_CARTES_PAR_PERSONNE];
+
         for ( unsigned int k = 0; k < 10; k++){
             joueurs.listeJoueurs[i].cartes[k] = talon.cartes[k];
+            joueurs.listeJoueurs[i].points += talon.cartes[k].points;
         }
 
         for ( unsigned int k = 0; k < 10; k++){
@@ -83,32 +87,23 @@ void DistributionCarte(Talon &talon, JoueursActifs &joueurs){
         joueurs.listeJoueurs[i].nbCartes = 10;
     }
 }
-/*void DistributionCarte(unsigned int NB_CARTES_PAR_PERSONNE, Carte (&cartes)[NB_CARTES], JoueursActifs &joueursActifs){
 
-    for ( unsigned int i = 0; i < joueursActifs.nbJoueur; i++){
+void AjouterCarte(Carte (&cartes)[NB_CARTES], Carte nouveauCarte){
 
-        for ( unsigned int k; k < NB_CARTES_PAR_PERSONNE; i++){
-            joueursActifs.listeJoueurs[i].cartes[k] = cartes[0];
-            supprimerCarte(carte[0]);
-        }
+    //definir un paquet de carte temporaire et y mettre les cartes actuelles
+    Carte *tempCarte = new Carte[NB_CARTES];
+    tempCarte = cartes;
 
-    }
-}*/
+    //supprimer l'espace de stockage pour les cartes actuelles et définir un espace plus grand
+    delete [] cartes;
+    cartes = new Carte[NB_CARTES + 1];
 
+    //remettre les cartes dans le bon paquet et ajouter la nouvelle carte
+    cartes = tempCarte;
+    cartes[NB_CARTES] = nouveauCarte;
 
-
-
-
-
-/*void MelangeCarte(Carte& cartes[]){
-    ...
+    //désalouer le paquet temporaire
+    delete [] tempCarte;
 }
 
-void attributionCarte(Joueur joueurs, Carte cartes);
-
-void supprimeCarte();
-
-void ajouterCarte();
-
-void initTalon();*/
 

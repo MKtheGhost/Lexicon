@@ -1,9 +1,11 @@
 #include <iostream>
 using namespace std;
 
+#include "header/commande.h"
 #include "header/partie.h"
 #include "header/joueur.h"
 #include "header/cartes.h"
+
 
 int main(int argc, char *argv[]){
 
@@ -24,9 +26,6 @@ int main(int argc, char *argv[]){
 
     for (unsigned int i = 0; i < nbJoueur; ++i){
         cout << "joueur " << joueurs[i].numero << " points : " << joueurs[i].points << endl;
-        for ( unsigned int k; k < joueursActifs.listeJoueurs[i].nbCartes; k++){
-            cout << joueursActifs.listeJoueurs[i].cartes[k].lettre << endl;
-        }
     }
 
 
@@ -83,5 +82,5 @@ void testTalon(Talon talon, Carte cartes[NB_CARTES]){
 
     cout << talon.cartes[0].lettre << endl;
     cout << talon.cartes[30].lettre << endl;
-    cout << talon.cartes[50].lettre << endl;
+    cout << talon.cartes[49].lettre << endl;
 }
