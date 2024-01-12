@@ -5,48 +5,77 @@ using namespace std;
 #include "../header/joueur.h"
 #include "../header/commande.h"
 #include "../header/partie.h"
+#include "../header/mots.h"
 
-/* void prendreCommande(char commande){
+void prendreCommande(char commande){
     
         if (commande == 'T'){
-            talon();
+            cout << "talon" << endl;
         }
 
         if (commande == 'E'){
-            exposee();
+            cout << "exposee" << endl;
         }
 
         if (commande == 'P'){
-            posee();
+            cout << "poser" << endl;
         }
 
         if (commande == 'R'){
-            remplacer();
+            cout << "remplacer" << endl;
         }
 
         if (commande == 'C'){
-            Completer();
+            cout << "completer" << endl;
         }
 }
 
-void finDeTour(){
-    cout << "Le tour est fini" << endl;
-    cout << "*Score" << endl;
-    for ( unsigned int i = 0; i <= nbjoueur; ++i){
-        cout << "joueur " << i + 1 << " : " << joueurs[i].points << "points" << endl;
-    } 
-};
+void InitTour(JoueursActifs &joueurs, Carte (&cartes)[NB_CARTES], Talon&talon){
 
-void InitTour(unsigned int nbJoueur){
+    //initialiser le tableau de mots posees
+    MotsPosee motsPosee;
+    motsPosee.nbMots = 0;
+    motsPosee.mots = new Mot[motsPosee.nbMots];
 
     //distribuer les cartes à chacun des joueurs au debut de chaque tour
-    attributionCarte();
-    cout << "Commandes valides : TEPRC" << endl;
+    InitCartes(joueurs, cartes, talon);
 
-    unsigned int cmpt = 0;
-    unsigned int nbCarte = 10;
+    bool aGagne = false;
+    //tant que aucun joueur n'a plus de carte
+    while (!aGagne){
 
-    while ( nbCarte != 0){ // tant que aucun des joueurs n'a posé toutes ses cartes
+        //pour déterminer quel joueur doit jouer
+        unsigned int cmpt = 0;
+        unsigned int numeroJoueur = cmpt % joueurs.nbJoueur + 1;
+        cmpt++;
+
+        //premiere ligne d'affichage : numero de joueur, carte exposee, cartes du joueur
+        cout << "Joueur " << numeroJoueur << " (" << talon.carteExposee.lettre << ") ";
+        for (unsigned i = 0; i < joueurs.listeJoueurs[numeroJoueur].nbCartes; i++){
+            cout << joueurs.listeJoueurs[numeroJoueur].cartes[i].lettre;
+        }
+        cout << endl;
+
+        //prendre la commande du joueur, afficher sa saisie exécuter la commande
+        char commande;
+        prendreCommande(commande);
+
+        //troisieme ligne d'affichage : les mots posees
+        if ( motsPosee.nbMots > 0){
+            for (unsigned int i = 0; i < ; i++){
+                cout << i + 1 << " - ";
+                for (unsigned int k = 0; k < mots[i].nbLettre; k++){
+                    cout << mots[i][k] <<;
+                }
+                cout << endl;
+            }
+        }
+        
+    }
+
+
+
+    /*while ( nbCarte != 0){ // tant que aucun des joueurs n'a posé toutes ses cartes
 
         Joueur joueur = cmpt % nbJoueur + 1;
         cmpt++;
@@ -69,15 +98,8 @@ void InitTour(unsigned int nbJoueur){
         }
     }
 
-    finDeTour();
+    finDeTour();*/
 }
-
-bool estgagne(unsigned int nbJoueur){
-    if (nbJoueur <= 1){
-        return true;
-    }
-}*/ 
-
 
 
 void InitCartes( JoueursActifs &joueurs,Carte (&cartes)[NB_CARTES], Talon &talon){

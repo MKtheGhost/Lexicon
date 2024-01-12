@@ -22,37 +22,17 @@ int main(int argc, char *argv[]){
     Talon talon;
     InitPaquet(cartes);
     
-
-
-
-
-
-
-
     //boucle de jeu
-    /*bool estGagne = false;
+    bool estGagne = false;
+
+    //tant que le jeu n'est pas gagné
     while (!estGagne){
-        InitCartes(cartes, talon);
+
+        //Initialiser les cartes pour chaque tour
+        InitCartes(joueursActifs, cartes, talon);
 
     }
 
-
-
-
-
-
-
-
-    //InitJoueur(nbJoueur);
-    /*while (!estgagne()) {
-        unsigned int nbJoueur = declareNbJoueur();
-
-        //tant que la partie n'est pas gagné par un joueur, un tour recommence
-        InitPartie(nbJoueur);
-    }
-
-    //quand une partie est gagné
-    cout << "La partie est finie" << endl;*/
 }
 
 void testJoueur(unsigned int nbJoueur, Joueur joueurs[NB_JOUEURS_MAX], JoueursActifs joueursActifs){
