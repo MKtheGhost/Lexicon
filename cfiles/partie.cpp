@@ -4,8 +4,9 @@ using namespace std;
 #include "../header/cartes.h"
 #include "../header/joueur.h"
 #include "../header/commande.h"
+#include "../header/partie.h"
 
-void prendreCommande(char commande){
+/* void prendreCommande(char commande){
     
         if (commande == 'T'){
             talon();
@@ -75,20 +76,37 @@ bool estgagne(unsigned int nbJoueur){
     if (nbJoueur <= 1){
         return true;
     }
+}*/ 
+
+
+
+void InitCartes( JoueursActifs &joueurs,Carte (&cartes)[NB_CARTES], Talon &talon){
+    MelangeCarte(cartes);
+    InitTalon(talon, cartes);
+    DistributionCarte(talon, joueurs);
 }
 
-void initPartie(unsigned int NbJoueur){
+void InitTalon(Talon &talon, Carte (&cartes)[NB_CARTES]){
+    talon.cartes = new Carte[NB_CARTES - 1];
 
-    //initialiser les joueurs selon leur nombre
-    Joueur joueurs[4];
-    initJoueur(NbJoueur);
+    for ( unsigned int i = 0; i < NB_CARTES - 1; i++ ){
+        talon.cartes[i] = cartes[i + 1];
+    }
 
-    //initialiser un jeu de carte
-    Carte Cartes;
-    initcarte(Cartes);
-    MelangeCarte();
+    talon.nbCartes = 50;
+    talon.carteExposee = cartes[0];
+}
 
-    //Initialiser le talon
-    Talon talon;
-    initTalon(talon);
+void DistributionCarte(Talon &talon, JoueursActifs& joueurs){
+    //pour chaque joueur
+    for (unsigned int i = 0; i < joueurs.nbJoueur; i++){
+        for (unsigned int k = 0; k < NB_CARTES_PAR_PERSONNE; k++){
+            //copier les 10 premiers cartes du talon dans la main du joueur
+            AjouterCarte(joueurs.listeJoueurs[i].nbCartes, joueurs.listeJoueurs[i].cartes, talon.cartes[k], k);
+        }
+        for (unsigned int k = 0; k < NB_CARTES_PAR_PERSONNE; k++){
+            //supprimer les 10 premiers cartes du talon après les avoir distribués au joueur
+            SupprimerCarte(talon.nbCartes, talon.cartes, k);
+        }
+    }
 }

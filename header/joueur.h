@@ -1,6 +1,8 @@
 #ifndef JOUEUR_H
 #define JOUEUR_H
 
+#include "cartes.h"
+
 const unsigned int NB_JOUEURS_MAX = 4;
 
 struct Joueur{

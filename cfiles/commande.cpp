@@ -5,12 +5,12 @@ using namespace std;
 
 #include "../header/cartes.h"
 #include "../header/joueur.h"
-
+#include "../header/partie.h"
 
 void talon(unsigned int idJoueur, JoueursActifs& joueurs, Talon& talon){
 
     //ajouter la carte au sommet du talon à la main du joueur
-    ajouterCarte(joueurs.listeJoueurs[idJoueur].cartes, talon.cartes[0]);
+    AjouterCarte(joueurs.listeJoueurs[idJoueur].nbCartes, joueurs.listeJoueurs[idJoueur].cartes, talon.carteExposee, joueurs.listeJoueurs[idJoueur].nbCartes + 1);
     joueurs.listeJoueurs[idJoueur].nbCartes++;
     joueurs.listeJoueurs[idJoueur].points += talon.cartes[0].points;
 
@@ -22,7 +22,7 @@ void talon(unsigned int idJoueur, JoueursActifs& joueurs, Talon& talon){
 void exposee(unsigned int idJoueur, JoueursActifs& joueurs, Talon& talon){
 
     //ajouter la carte exposee dans la main du joueur
-    ajouterCarte(joueurs.listeJoueurs[idJoueur].cartes, talon.carteExposee);
+    AjouterCarte(joueurs.listeJoueurs[idJoueur].nbCartes, joueurs.listeJoueurs[idJoueur].cartes, talon.carteExposee, joueurs.listeJoueurs[idJoueur].nbCartes + 1);
     joueurs.listeJoueurs[idJoueur].nbCartes++;
     joueurs.listeJoueurs[idJoueur].points += talon.carteExposee.points;
 

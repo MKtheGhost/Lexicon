@@ -21,12 +21,37 @@ int main(int argc, char *argv[]){
     Carte cartes[NB_CARTES];
     Talon talon;
     InitPaquet(cartes);
+    InitTalon(talon, cartes);
 
-    InitCartes(joueursActifs, cartes, talon);
+    Carte *test = new Carte[4];
+    test[0] = talon.cartes[0];
+    test[1] = talon.cartes[1];
+    test[2] = talon.cartes[2];
+    test[3] = talon.cartes[3];
 
-    for (unsigned int i = 0; i < nbJoueur; ++i){
-        cout << "joueur " << joueurs[i].numero << " points : " << joueurs[i].points << endl;
+    unsigned int nbCartes = 4;
+
+    for ( unsigned int i = 0; i < nbCartes; i++){
+        cout << test[i].lettre << endl;
     }
+
+    SupprimerCarte(nbCartes, test, 2 );
+
+    cout << "test dans main" << endl;
+    for ( unsigned int i = 0; i < nbCartes; i++){
+        cout << test[i].lettre << endl;
+    }
+
+
+    //cout << talon.cartes[3].lettre << endl;
+    //cout << test[3].lettre << endl;
+
+    /*for (unsigned int i = 0; i < 4; i++){
+        cout << talon.cartes[i].lettre << endl;
+        cout << "carte : " << test[i].lettre << " points : " << test[i].points << endl;
+    }*/
+
+
 
 
 
@@ -83,4 +108,19 @@ void testTalon(Talon talon, Carte cartes[NB_CARTES]){
     cout << talon.cartes[0].lettre << endl;
     cout << talon.cartes[30].lettre << endl;
     cout << talon.cartes[49].lettre << endl;
+}
+
+void testAjouterCarte(Talon talon, unsigned int nbCartes){
+    Carte *test = new Carte[4];
+    test[0] = talon.cartes[0];
+    test[1] = talon.cartes[1];
+    test[2] = talon.cartes[2];
+    test[3] = talon.cartes[3];
+
+    AjouterCarte(nbCartes, test, talon.cartes[13], 4 );
+
+    cout << "test dans main" << endl;
+    for ( unsigned int i = 0; i < nbCartes; i++){
+        cout << test[i].lettre << endl;
+    }
 }

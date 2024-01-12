@@ -5,12 +5,6 @@ using namespace std;
 #include "../header/joueur.h"
 #include "../header/cartes.h"
 
-void InitCartes( JoueursActifs &joueurs,Carte (&cartes)[NB_CARTES], Talon &talon){
-    MelangeCarte(cartes);
-    InitTalon(talon, cartes);
-    DistributionCarte(talon, joueurs);
-}
-
 void InitPaquet(Carte (&cartes)[NB_CARTES]){
 
     const unsigned int NB_ELEMENT_TAB_CARTE = 26;
@@ -45,65 +39,76 @@ void MelangeCarte(Carte (&cartes)[NB_CARTES]){
     }
 }
 
-void InitTalon(Talon &talon, Carte (&cartes)[NB_CARTES]){
-    talon.cartes = new Carte[NB_CARTES - 1];
+void SupprimerCarte(unsigned int &nbCarte, Carte *&cartes, unsigned int iCarte){
 
-    for ( unsigned int i = 0; i < NB_CARTES - 1; i++ ){
-        talon.cartes[i] = cartes[i + 1];
-    }
+    //définir un paquet de carte plus petit
+    Carte *tempCarte = new Carte[nbCarte - 1];
 
-    talon.nbCartes = 50;
-    talon.carteExposee = cartes[0];
-}
-
-void SupprimerCarte(unsigned int nbCartes, Carte *cartes, unsigned int iCarte){
-
-    Carte *tempCarte = new Carte;
-    *tempCarte = *cartes;
-    delete [] cartes;
-
-    for (unsigned int i; i < nbCartes; i++){
-        if (i != iCarte){
-            cartes[i] = tempCarte[i];
-        }
-    }
-    delete [] tempCarte;
-    tempCarte = NULL;
-}
-
-void DistributionCarte(Talon &talon, JoueursActifs &joueurs){
-   for ( unsigned int i = 0; i < joueurs.nbJoueur; i++){
-
-        joueurs.listeJoueurs[i].cartes = new Carte[NB_CARTES_PAR_PERSONNE];
-
-        for ( unsigned int k = 0; k < 10; k++){
-            joueurs.listeJoueurs[i].cartes[k] = talon.cartes[k];
-            joueurs.listeJoueurs[i].points += talon.cartes[k].points;
+    //supression à la fin du paquet
+    if (iCarte == nbCarte - 1){
+        for (unsigned int i = 0; i < iCarte; i++){
+            tempCarte[i] = cartes[i];
         }
 
-        for ( unsigned int k = 0; k < 10; k++){
-            SupprimerCarte(talon.nbCartes, talon.cartes, k);
+        delete [] cartes;
+        cartes = tempCarte;
+    } 
+
+    //supression au milieu du paquet
+    else{
+        for (unsigned int i = 0; i < iCarte; i++){
+            tempCarte[i] = cartes[i];
         }
-        joueurs.listeJoueurs[i].nbCartes = 10;
+
+        for (unsigned int i = iCarte; i < nbCarte - 1; i++){
+            tempCarte[i] = cartes[i + 1];
+        }
+
+        delete [] cartes;
+        cartes = tempCarte;
     }
+
+    nbCarte -- ;
 }
 
-void AjouterCarte(Carte (&cartes)[NB_CARTES], Carte nouveauCarte){
+void AjouterCarte(unsigned int &nbCarte, Carte *&cartes, Carte nouvelleCarte, unsigned int iCarte){
 
-    //definir un paquet de carte temporaire et y mettre les cartes actuelles
-    Carte *tempCarte = new Carte[NB_CARTES];
-    tempCarte = cartes;
+    //definir un paquet de carte plus grand
+    Carte *tempCarte = new Carte[nbCarte + 1];
 
-    //supprimer l'espace de stockage pour les cartes actuelles et définir un espace plus grand
-    delete [] cartes;
-    cartes = new Carte[NB_CARTES + 1];
+    //dans le cas où on veut ajouter une carte à la fin du paquet
+    if (iCarte >= nbCarte){
 
-    //remettre les cartes dans le bon paquet et ajouter la nouvelle carte
-    cartes = tempCarte;
-    cartes[NB_CARTES] = nouveauCarte;
+        //mettre les cartes actuelles dans le nouveau paquet
+        for (unsigned int i = 0; i < nbCarte; i++){
+            tempCarte[i] = cartes[i];
+        }
 
-    //désalouer le paquet temporaire
-    delete [] tempCarte;
+        //supprimer l'espace de stockage pour les cartes actuelles et changer le pointeur de cartes vers le nouveau paquet
+        delete [] cartes;
+        cartes = tempCarte;
+
+        cartes[iCarte] = nouvelleCarte;
+    }
+
+    //le cas où on veut inserer une carte entre les cartes existantes
+    else {
+
+        for (unsigned int i = 0; i < iCarte; i++){
+            tempCarte[i] = cartes[i];
+        }
+
+        tempCarte[iCarte] = nouvelleCarte;
+
+        for (unsigned int i = iCarte + 1; i < nbCarte + 1; i++){
+            tempCarte[i] = cartes[i - 1];
+        }
+
+        delete [] cartes;
+        cartes = tempCarte;
+    }
+
+    nbCarte++;
 }
 
 

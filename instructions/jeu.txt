@@ -40,6 +40,5 @@ trucs à coder :
 - les commandes
 
 - vérifier que la suppression de carte et la distribution de carte marche bien
-- coder l'ajout des cartes
 - coder les commandes
 - coder la boucle de jeu
