@@ -100,13 +100,23 @@ void InitTalon(Talon &talon, Carte (&cartes)[NB_CARTES]){
 void DistributionCarte(Talon &talon, JoueursActifs& joueurs){
     //pour chaque joueur
     for (unsigned int i = 0; i < joueurs.nbJoueur; i++){
+
+        //initialiser son paquet de carte dynamique
+        joueurs.listeJoueurs[i].cartes = new Carte[NB_CARTES_PAR_PERSONNE];
+
         for (unsigned int k = 0; k < NB_CARTES_PAR_PERSONNE; k++){
+
+            // initialiser le nombre de carte par personne pour pouvoir utilser AjouterCarte
+            joueurs.listeJoueurs[i].nbCartes = NB_CARTES_PAR_PERSONNE;
+
             //copier les 10 premiers cartes du talon dans la main du joueur
             AjouterCarte(joueurs.listeJoueurs[i].nbCartes, joueurs.listeJoueurs[i].cartes, talon.cartes[k], k);
         }
         for (unsigned int k = 0; k < NB_CARTES_PAR_PERSONNE; k++){
             //supprimer les 10 premiers cartes du talon après les avoir distribués au joueur
-            SupprimerCarte(talon.nbCartes, talon.cartes, k);
+            SupprimerCarte(talon.nbCartes, talon.cartes, 0);
         }
+
+        joueurs.listeJoueurs[i].nbCartes--;
     }
 }

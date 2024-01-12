@@ -21,35 +21,8 @@ int main(int argc, char *argv[]){
     Carte cartes[NB_CARTES];
     Talon talon;
     InitPaquet(cartes);
-    InitTalon(talon, cartes);
+    
 
-    Carte *test = new Carte[4];
-    test[0] = talon.cartes[0];
-    test[1] = talon.cartes[1];
-    test[2] = talon.cartes[2];
-    test[3] = talon.cartes[3];
-
-    unsigned int nbCartes = 4;
-
-    for ( unsigned int i = 0; i < nbCartes; i++){
-        cout << test[i].lettre << endl;
-    }
-
-    SupprimerCarte(nbCartes, test, 2 );
-
-    cout << "test dans main" << endl;
-    for ( unsigned int i = 0; i < nbCartes; i++){
-        cout << test[i].lettre << endl;
-    }
-
-
-    //cout << talon.cartes[3].lettre << endl;
-    //cout << test[3].lettre << endl;
-
-    /*for (unsigned int i = 0; i < 4; i++){
-        cout << talon.cartes[i].lettre << endl;
-        cout << "carte : " << test[i].lettre << " points : " << test[i].points << endl;
-    }*/
 
 
 
@@ -123,4 +96,25 @@ void testAjouterCarte(Talon talon, unsigned int nbCartes){
     for ( unsigned int i = 0; i < nbCartes; i++){
         cout << test[i].lettre << endl;
     }
+}
+
+void testInitCarte(unsigned int nbJoueur, JoueursActifs joueursActifs, Talon talon, Carte (&cartes)[NB_CARTES]){
+    InitCartes(joueursActifs, cartes, talon);
+    cout << "test joueur" << endl;
+    for (unsigned int i = 0; i < nbJoueur; ++i){
+        cout << "numero : " << joueursActifs.listeJoueurs[i].numero << endl;
+        for ( unsigned int k = 0; k < 10; k++){
+            cout << joueursActifs.listeJoueurs[i].cartes[k].lettre << " ";
+        }
+        cout << endl;
+        cout << "nb Carte : " << joueursActifs.listeJoueurs[i].nbCartes << endl;
+    }
+
+    cout << "test talon" << endl;
+    for (unsigned int i = 0; i < talon.nbCartes; ++i){
+        cout << talon.cartes[i].lettre << " ";
+    }
+    cout << endl;
+
+     cout << talon.nbCartes << endl;
 }
