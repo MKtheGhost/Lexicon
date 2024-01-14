@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
     //boucle de jeu
     bool estGagne = false;
 
-    cout << "(commandes valides : TEPRC)" << endl;
+    cout << "(commandes valides : TEP)" << endl;
 
     //tant que le jeu n'est pas gagné
     while (!estGagne){
