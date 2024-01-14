@@ -1,10 +1,10 @@
 #include <iostream>
 using namespace std;
 
-#include "header/commande.h"
-#include "header/partie.h"
-#include "header/joueur.h"
-#include "header/cartes.h"
+#include "src/header/commande.h"
+#include "src/header/partie.h"
+#include "src/header/joueur.h"
+#include "src/header/cartes.h"
 
 
 int main(int argc, char *argv[]){
@@ -25,13 +25,29 @@ int main(int argc, char *argv[]){
     //boucle de jeu
     bool estGagne = false;
 
+    cout << "(commandes valides : TEPRC)" << endl;
+
     //tant que le jeu n'est pas gagné
     while (!estGagne){
 
-        //Initialiser les cartes pour chaque tour
-        InitCartes(joueursActifs, cartes, talon);
+        //recommencer un tour de jeu
+        InitTour(joueursActifs, cartes, talon);
 
+        if (joueursActifs.nbJoueur <= 1){
+            estGagne = true;
+        }
     }
+
+    cout << endl;
+    cout << "La partie est finie" << endl;
+
+    //desallouer tous les tableaux dynamiques
+    delete [] joueursActifs.listeJoueurs;
+    joueursActifs.listeJoueurs = NULL;
+
+    delete [] talon.cartes;
+    talon.cartes = NULL;
+
 
 }
 
@@ -44,7 +60,7 @@ void testJoueur(unsigned int nbJoueur, Joueur joueurs[NB_JOUEURS_MAX], JoueursAc
         cout << "numero : " << joueursActifs.listeJoueurs[i].numero << endl;
     }
 
-     supprimerJoueur(joueursActifs, joueurs);
+     supprimerJoueur(joueursActifs);
 }
 
 void testCarte(Carte cartes[NB_CARTES]){
@@ -56,7 +72,7 @@ void testCarte(Carte cartes[NB_CARTES]){
 void testTalon(Talon talon, Carte cartes[NB_CARTES]){
     //InitTalon(talon, cartes);
 
-    cout << talon.carteExposee.lettre << endl;
+    //cout << talon.carteExposee.lettre << endl;
 
     cout << talon.cartes[0].lettre << endl;
     cout << talon.cartes[30].lettre << endl;

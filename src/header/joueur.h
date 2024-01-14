@@ -31,13 +31,6 @@ void InitJoueur(unsigned int nbJoueur, Joueur (&joueurs)[NB_JOUEURS_MAX], Joueur
  *  @param{in/out} joueursActifs : la liste des joueurs actifs à modifier
  *  @param[in] joueurs : la liste des joueurs original 
 */
-void supprimerJoueur (JoueursActifs& joueursActifs, Joueur joueurs[NB_JOUEURS_MAX]);
-
-/**
- * @brief initialiser les joueurs actifs dans le tour en cours
- * @param{in/out} joueursActifs : la struct de joueurs actifs à initialiser
- * @param[in] nbJoueur : le nombre de joueur jouant dans le tour en cours
-*/
-void initJoueursActifs(JoueursActifs& joueursActifs, unsigned int nbJoueur);
+void supprimerJoueur (JoueursActifs& joueursActifs);
 
 #endif
